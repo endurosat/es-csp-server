@@ -1,0 +1,17 @@
+[Unit]
+Description=ES Service: CSP Server (CAN)
+BindsTo=sys-subsystem-net-devices-can0.device
+After=sys-subsystem-net-devices-can0.device
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/bin/csp_server -d can0 -p can
+Restart=on-failure
+RestartSec=2
+RemainAfterExit=yes
+TimeoutStopSec=1
+
+[Install]
+WantedBy=multi-user.target

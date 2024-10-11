@@ -1,0 +1,16 @@
+[Unit]
+Description=ES Service: CSP Server (UART)
+ConditionPathExists=/dev/ttyUSB0
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/bin/csp_server -d /dev/ttyUSB0 -p uart
+Restart=on-failure
+RestartSec=2
+RemainAfterExit=yes
+TimeoutStopSec=1
+
+[Install]
+WantedBy=multi-user.target
