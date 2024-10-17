@@ -6,6 +6,8 @@ include(CMakePackageConfigHelpers)
 include(FindThreads)
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/install_paths.cmake)
 
+find_package(csp CONFIG REQUIRED)
+
 if(USE_STATIC_ANALYSIS)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/analysis.cmake)
 endif(USE_STATIC_ANALYSIS)
