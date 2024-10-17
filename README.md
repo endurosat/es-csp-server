@@ -196,3 +196,5 @@ CSP_BUFFER_SIZE    = 256 //bytes
 ES_CSP_SERVER_ADDRESS_DFLT 10
 ES_CSP_TFTP_PORT           11
 ```
+# Software license
+The source code is available under MIT license, see LICENSE for license text
