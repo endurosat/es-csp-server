@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-include(es_version.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/es_version.cmake)
 project(es_csp_server VERSION ${ES_VERSION} LANGUAGES C)
 
 include(FeatureSummary)
