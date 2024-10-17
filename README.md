@@ -37,11 +37,15 @@ This could be easily extended for other interfaces supported by `CSP` if necessa
 ## Requirements
 
 Build:
-* `threads/pthreads` = any (CSP routing)
-* `libsocketcan` = any (for CAN support)
+* `git`  => any
 * `CMake` >= 3.21
+* `pkg-config` = any
+* `gcc`  => 12 (for -fanalyzer)
+* `threads/pthreads` = any
+* `libsocketcan` = any
 * `clang-tidy` = any (optional)
 * `cpp-check` = any (optional)
+* `systemd`  => any (optional)
 
 API docs python packages:
 * `clang-17` (development)

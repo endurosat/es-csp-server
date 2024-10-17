@@ -19,17 +19,7 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADER_FILES})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 
-if(BUILD_INTERNAL_CSP)
-        target_include_directories(${PROJECT_NAME}
-                PUBLIC
-                $<BUILD_INTERFACE:${libcsp_SOURCE_DIR}>
-                $<BUILD_INTERFACE:${libcsp_SOURCE_DIR}/include>
-        )
-        target_link_libraries(${PROJECT_NAME} PUBLIC csp::csp)
-else()
-        target_link_libraries(${PROJECT_NAME} PUBLIC csp::csp)
-endif()
-
+target_link_libraries(${PROJECT_NAME} PUBLIC csp::csp)
 target_link_libraries(${PROJECT_NAME} PRIVATE es_log::es_log)
 target_link_libraries(${PROJECT_NAME} PRIVATE es_tftp::es_tftp)
 
@@ -48,21 +38,9 @@ target_include_directories(${PROJECT_NAME}
 
 add_library(${PROJECT_NAME}-static STATIC ${SOURCES} ${HEADER_FILES})
 add_library(${PROJECT_NAME}::${PROJECT_NAME}-static ALIAS ${PROJECT_NAME}-static)
-
-
-if(BUILD_INTERNAL_CSP)
-        target_include_directories(${PROJECT_NAME}
-                PUBLIC
-                $<BUILD_INTERFACE:${libcsp_SOURCE_DIR}>
-                $<BUILD_INTERFACE:${libcsp_SOURCE_DIR}/include>
-        )
-        target_link_libraries(${PROJECT_NAME}-static PRIVATE csp::csp)
-else()
-        target_link_libraries(${PROJECT_NAME}-static PRIVATE csp::csp)
-endif()
-
-target_link_libraries(${PROJECT_NAME}-static PRIVATE es_log::es_log)
-target_link_libraries(${PROJECT_NAME}-static PRIVATE es_tftp::es_tftp)
+target_link_libraries(${PROJECT_NAME}-static PRIVATE csp::csp-static)
+target_link_libraries(${PROJECT_NAME}-static PRIVATE es_log::es_log-static)
+target_link_libraries(${PROJECT_NAME}-static PRIVATE es_tftp::es_tftp-static)
 
 set_property(TARGET ${PROJECT_NAME}-static PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -75,7 +53,7 @@ target_include_directories(${PROJECT_NAME}-static
 set(PROJECT_CONFIG_VERSION_FILE "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
 set(PROJECT_CONFIG_FILE         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
 
-configure_package_config_file(cmake/Config.cmake.in
+configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in
         ${PROJECT_CONFIG_FILE}
         INSTALL_DESTINATION ${INSTALL_CONFIG_DIR})
 

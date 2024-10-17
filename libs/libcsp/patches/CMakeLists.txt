@@ -285,7 +285,9 @@ set_target_properties (csp PROPERTIES
 target_link_libraries(csp
     PUBLIC ${MORE_LIBRARIES}
 )
+if(LIBSOCKETCAN_FOUND)
 target_link_libraries(csp PRIVATE driver_can_shared)
+endif()
 include(FindThreads)
 target_link_libraries(csp PUBLIC Threads::Threads)
 
@@ -311,11 +313,13 @@ add_library(csp::csp-static ALIAS csp-static)
     OUTPUT_NAME "csp"
     PREFIX "lib"
   )
+if(LIBSOCKETCAN_FOUND)
   target_link_libraries(csp-static
 	  PRIVATE $<TARGET_OBJECTS:driver_can>
   )
   target_link_libraries(csp-static PUBLIC
     ${LIBSOCKETCAN_LIBRARIES})
+endif()
 
   target_include_directories(csp-static
     PUBLIC
@@ -344,7 +348,7 @@ endif()
 set(PROJECT_CONFIG_VERSION_FILE "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
 set(PROJECT_CONFIG_FILE         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
 
-configure_package_config_file(Config.cmake.in
+configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in
         ${PROJECT_CONFIG_FILE}
         INSTALL_DESTINATION ${INSTALL_CONFIG_DIR})
 

@@ -12,6 +12,8 @@ set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -Wextra -pedantic -fanalyzer")
 
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
+option(USE_STATIC_ANALYSIS "Enable static analysis with cppcheck on sources" OFF)
+
 find_package(Git REQUIRED)
 
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")

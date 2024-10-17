@@ -3,6 +3,11 @@ include(CMakePackageConfigHelpers)
 
 find_package(PkgConfig REQUIRED)
 pkg_get_variable(SYSTEMD_UNIT_DIR systemd systemdsystemunitdir)
+# If no build type was specified, set it to Release.
+if(NOT SYSTEMD_UNIT_DIR)
+	set(SYSTEMD_UNIT_DIR ${CMAKE_INSTALL_PREFIX}/etc/systemd/system CACHE STRING
+	"Default install path for services" FORCE)
+endif(NOT SYSTEMD_UNIT_DIR)
 
 # If no build type was specified, set it to Release.
 if(NOT CMAKE_BUILD_TYPE)

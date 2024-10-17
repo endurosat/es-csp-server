@@ -5,7 +5,6 @@ project(csp_server DESCRIPTION "CSP server" LANGUAGES C)
 include(${CMAKE_SOURCE_DIR}/cmake/install_paths.cmake)
 find_package(PkgConfig REQUIRED)
 
-
 if(USE_STATIC_ANALYSIS)
 	include(${CMAKE_SOURCE_DIR}/cmake/analysis.cmake)
 endif(USE_STATIC_ANALYSIS)

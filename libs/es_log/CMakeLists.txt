@@ -4,10 +4,10 @@ project(es_log VERSION 1.0.0 LANGUAGES C)
 
 include(CMakePackageConfigHelpers)
 include(FindThreads)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/install_paths.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/install_paths.cmake)
 
 if(USE_STATIC_ANALYSIS)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/analysis.cmake)
+	include(${CMAKE_SOURCE_DIR}/cmake/analysis.cmake)
 endif(USE_STATIC_ANALYSIS)
 
 message(STATUS "Building ${PROJECT_NAME}!")
@@ -45,7 +45,7 @@ target_include_directories(${PROJECT_NAME}-static
 set(PROJECT_CONFIG_VERSION_FILE "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
 set(PROJECT_CONFIG_FILE         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
 
-configure_package_config_file(cmake/Config.cmake.in
+configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in
         ${PROJECT_CONFIG_FILE}
         INSTALL_DESTINATION ${INSTALL_CONFIG_DIR})
 
