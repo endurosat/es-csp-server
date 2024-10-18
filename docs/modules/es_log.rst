@@ -21,3 +21,4 @@ Interface Functions
 
 .. autocfunction:: es_log.h::es_log_set_lvl
 .. autocfunction:: es_log.h::es_log_get_lvl
+.. autocfunction:: es_log.h::es_log_msg

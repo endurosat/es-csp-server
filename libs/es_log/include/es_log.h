@@ -56,7 +56,17 @@ void es_log_set_lvl (log_lvl_t level);
  */
 log_lvl_t es_log_get_lvl (void);
 
-
+/**
+ * Log a message
+ *
+ * .. note:: Currently the log stream is directed to stdout but it can be redirected to any
+ *  application spcefic stream.
+ *
+ * @param[in] module: module from which the message has been sent
+ * @param[in] line: source code line number
+ * @param[in] level: message level
+ * @param[in] format: string formatter for the message
+ */
 void es_log_msg (const char *module, int line, int level, const char *format, ...);
 
 #ifdef __cplusplus
