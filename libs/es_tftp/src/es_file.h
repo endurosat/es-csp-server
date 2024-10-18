@@ -14,7 +14,8 @@
 /*********************************** TYPEDEFS *********************************/
 typedef struct _es_file_t es_file_t;
 
-/************************* INTERFACE FUNCTION PROTOTYPES **********************/
+/******************************* INTERFACE FUNCTIONS **************************/
+
 /**
  * Create new ES File object
  */
