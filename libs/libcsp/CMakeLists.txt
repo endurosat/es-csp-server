@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 set(LIBCSP_SOURCE_DIR ${PROJECT_SOURCE_DIR}/external/libcsp)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(SOCKETCAN libsocketcan OPTIONAL)
+pkg_check_modules(SOCKETCAN libsocketcan)
 
 # use the hint from about to find the location of socketcan
 find_library(SOCKETCAN_LIBRARY
