@@ -8,7 +8,9 @@
 # Default value
 set(ES_VERSION 1.0.0.0)
 
-set(PROJECT_VERSION_FILE ${CMAKE_SOURCE_DIR}/version.json)
+if (NOT DEFINED PROJECT_VERSION_FILE)
+  set(PROJECT_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/version.json)
+endif()
 file(READ ${PROJECT_VERSION_FILE} VERSION_JSON_STR)
 
 # [1] Extract the software variant from the JSON-formatted string

@@ -1,14 +1,18 @@
 # Configuration file for the Sphinx documentation builder.
 # -- Imports -----------------------------------------------------------------
+import os
 from pathlib import Path
+from xml.dom import minidom
 import pygit2
 
 # -- Path setup --------------------------------------------------------------
+VERSION_FILE_PATH = "./build/version.xml"
 
 # -- Project information -----------------------------------------------------
 project = 'ES CSP Server'
 copyright = 'Endurosat'
 author = 'Filip Milev, Iliya Iliev, Simeon Baltadzhiev'
+
 
 # -- Constants ---------------------------------------------------------------
 
@@ -23,7 +27,7 @@ extensions = [
     'sphinx_c_autodoc.viewcode',
     "sphinx_design",
     "sphinx_git",
-    "sphinx_copybutton"
+    "sphinx_copybutton",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -41,7 +45,7 @@ c_autodoc_roots = [
     '../libs/es_tftp/include/',
     '../libs/es_tftp/src/',
     '../app/include/',
-    ]
+]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -63,17 +67,32 @@ html_theme_options = {
     'navigation_depth': 2,
     'includehidden': True,
     'titles_only': True,
-    'sticky_navigation': True
+    'sticky_navigation': True,
 }
 
-version = pygit2.Repository('.').head.shorthand
+# Default version value
+version = "v.x.x.x.x"
+
+if os.path.exists(VERSION_FILE_PATH):
+    xml_version_file = minidom.parse(VERSION_FILE_PATH)
+    # Find all 'version' elements in the XML file
+    xml_version = xml_version_file.getElementsByTagName('version')
+
+    version = "v.{major}.{minor}.{patch}".format(
+        major=xml_version[0].attributes['major'].value,
+        minor=xml_version[0].attributes['minor'].value,
+        patch=xml_version[0].attributes['patch'].value,
+    )
+
+branch_name = pygit2.Repository('.').head.shorthand
+version = f"{version} ({branch_name})"
 
 
 def include_readme_file(app, docname, source):
     """
-        This hook reads the contents of the README.md file, replaces the
-        link for `git-commit` and inserts the modified contents in the index.md
-        file before the first occuarance of  ```{toctree}
+    This hook reads the contents of the README.md file, replaces the
+    link for `git-commit` and inserts the modified contents in the index.md
+    file before the first occuarance of  ```{toctree}
     """
     if docname == 'index':
         # Read and modify the contents of README
@@ -89,7 +108,10 @@ def include_readme_file(app, docname, source):
         toctree_index = source[0].find('```{toctree}')
         if toctree_index != -1:
             # Insert the modified README files
-            source[0] = source[0][:toctree_index] + readme_contents + source[0][toctree_index:]
+            source[0] = (
+                source[0][:toctree_index] + readme_contents + source[0][toctree_index:]
+            )
+
 
 def setup(app):
     app.connect('source-read', include_readme_file)
