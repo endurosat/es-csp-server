@@ -6,7 +6,15 @@ from xml.dom import minidom
 import pygit2
 
 # -- Path setup --------------------------------------------------------------
-VERSION_FILE_PATH = "./build/version.xml"
+LOCAL_BUILD_VERSION_PATH = "./build/version.xml"
+WORKFLOW_BUILD_VERSION_PATH = "../build-docs/version.xml"
+
+if os.path.exists(LOCAL_BUILD_VERSION_PATH):
+    version_file_path = LOCAL_BUILD_VERSION_PATH
+elif os.path.exists(workflow_build):
+    version_file_path = WORKFLOW_BUILD_VERSION_PATH
+else:
+    version_file_path = None
 
 # -- Project information -----------------------------------------------------
 project = 'ES CSP Server'
@@ -73,8 +81,8 @@ html_theme_options = {
 # Default version value
 version = "v.x.x.x.x"
 
-if os.path.exists(VERSION_FILE_PATH):
-    xml_version_file = minidom.parse(VERSION_FILE_PATH)
+if version_file_path:
+    xml_version_file = minidom.parse(version_file_path)
     # Find all 'version' elements in the XML file
     xml_version = xml_version_file.getElementsByTagName('version')
 
