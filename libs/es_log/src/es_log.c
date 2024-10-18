@@ -51,7 +51,7 @@ es_log_msg (const char *module, int line, int level, const char *format, ...)
     /**
      * Print to stdout
      */
-    fprintf(stderr, "%s\n", buffer);
+    fprintf(stdout, "%s\n", buffer);
 
     return;
 }
