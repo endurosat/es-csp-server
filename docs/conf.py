@@ -11,7 +11,7 @@ WORKFLOW_BUILD_VERSION_PATH = "../build-docs/version.xml"
 
 if os.path.exists(LOCAL_BUILD_VERSION_PATH):
     version_file_path = LOCAL_BUILD_VERSION_PATH
-elif os.path.exists(workflow_build):
+elif os.path.exists(WORKFLOW_BUILD_VERSION_PATH):
     version_file_path = WORKFLOW_BUILD_VERSION_PATH
 else:
     version_file_path = None
