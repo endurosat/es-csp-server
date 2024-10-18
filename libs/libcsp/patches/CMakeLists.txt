@@ -7,40 +7,13 @@ set(CSP_RELEASE 1.6)
 enable_language(C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_EXTENSIONS ON)
-set(CMAKE_C_FLAGS_DEBUG "-g -O0 -std=gnu11 -Wall -Wextra   -fanalyzer")
-set(CMAKE_C_FLAGS_RELEASE "-std=gnu11 -Wall -Wextra -fanalyzer")
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-find_package(PkgConfig REQUIRED)
-pkg_get_variable(SYSTEMD_UNIT_DIR systemd systemdsystemunitdir)
-
-# If no build type was specified, set it to Release.
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release CACHE STRING
-            "Choose the type of build, options are: None Debug Release."
-            FORCE)
-endif(NOT CMAKE_BUILD_TYPE)
-
-include(${CMAKE_SOURCE_DIR}/cmake/install_paths.cmake)
 if(USE_STATIC_ANALYSIS)
-	include(${CMAKE_SOURCE_DIR}/cmake/analysis.cmake)
+	include(analysis)
 endif(USE_STATIC_ANALYSIS)
-
-# Projectwise paths
-set(PROJECT_PREFIX ${PROJECT_NAME})
-set(INSTALL_RUNTIME_DIR ${CMAKE_INSTALL_BINDIR})
-set(INSTALL_CONFIG_DIR  ${CMAKE_INSTALL_DATAROOTDIR}/cmake/${PROJECT_NAME})
-set(INSTALL_LIBRARY_DIR ${CMAKE_INSTALL_LIBDIR})
-set(INSTALL_ARCHIVE_DIR ${CMAKE_INSTALL_LIBDIR})
-set(INSTALL_INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_PREFIX})
-
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(INSTALL_SYSTEMD_SERVICE ${CMAKE_INSTALL_PREFIX}/${SYSTEMD_UNIT_DIR})
-else(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(INSTALL_SYSTEMD_SERVICE ${SYSTEMD_UNIT_DIR})
-endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 include(TestBigEndian)
 test_big_endian(CSP_ENDIANNESS)

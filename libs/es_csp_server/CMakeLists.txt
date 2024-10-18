@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(es_csp_server VERSION 1.0.0 LANGUAGES C)
+project(es_csp_server VERSION "${ES_VERSION}" LANGUAGES C)
 
 include(CMakePackageConfigHelpers)
 include(FindThreads)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/install_paths.cmake)
+include(install_paths)
 
 if(USE_STATIC_ANALYSIS)
-	include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/analysis.cmake)
+	include(analysis)
 endif(USE_STATIC_ANALYSIS)
 
 message(STATUS "Building ${PROJECT_NAME}!")

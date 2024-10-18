@@ -40,7 +40,8 @@ Build:
 * `git`  => any
 * `CMake` >= 3.21
 * `pkg-config` = any
-* `gcc`  => 12 (for -fanalyzer)
+* `gcc`  => 11 (for -fanalyzer)
+* `ninja` = any (optional)
 * `threads/pthreads` = any
 * `libsocketcan` = any
 * `clang-tidy` = any (optional)
@@ -66,6 +67,9 @@ API docs python packages:
 
 **_NOTE:_**  change the desired install prefix and build type;  <br>
 **_NOTE:_**  for cross-compilation use CMake toolchain file or manually set your environment
+
+## Using Clang
+Pass `-DCMAKE_C_COMPILER=clang` to cmake or use global overrides / toolchain file.
 
 ## Running
 

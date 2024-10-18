@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
 include(GNUInstallDirs)
-project(csp_server DESCRIPTION "CSP server" LANGUAGES C)
 
-include(${CMAKE_SOURCE_DIR}/cmake/install_paths.cmake)
+project(csp_server DESCRIPTION "CSP server" VERSION "${ES_VERSION}" LANGUAGES C)
+
+include(install_paths)
 find_package(PkgConfig REQUIRED)
 
 if(USE_STATIC_ANALYSIS)
-	include(${CMAKE_SOURCE_DIR}/cmake/analysis.cmake)
+	include(analysis)
 endif(USE_STATIC_ANALYSIS)
 
 file(GLOB_RECURSE SOURCES "src/*.c")
