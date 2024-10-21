@@ -21,6 +21,7 @@ jobs:
 
       - name: Build
         run: |
+          git fetch --prune --unshallow
           cmake -B build-docs -S docs
           cmake --build build-docs
 
