@@ -27,7 +27,7 @@ message(TRACE "EXTRACTED_MAJOR_VERSION: ${EXTRACTED_MAJOR_VERSION}")
 # Determine the default branch (main or master)
 execute_process(
     COMMAND git remote show origin
-    COMMAND sed -n "/HEAD branch/s/.*: //p"
+    COMMAND sed -n "/HEAD branch/s/.*: //p"  
     OUTPUT_VARIABLE default_branch
     RESULT_VARIABLE script_result
     ERROR_VARIABLE script_error
@@ -68,6 +68,6 @@ elseif(DEFINED ENV{GITHUB_RUN_ID})
     message(TRACE "patch: ${patch}")
 endif()
 
-string(CONCAT ES_VERSION "${EXTRACTED_SW_VARIANT}.${EXTRACTED_MAJOR_VERSION}.${commits_in_master}.${patch}")
+string(CONCAT ES_VERSION "${EXTRACTED_SW_VARIANT}.${EXTRACTED_MAJOR_VERSION}.${commits_in_default_branch}.${patch}")
 
 message(STATUS "ES_VERSION is set to ${ES_VERSION}")
