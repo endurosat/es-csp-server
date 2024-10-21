@@ -9,7 +9,7 @@
 set(ES_VERSION 1.0.0.0)
 
 if (NOT DEFINED PROJECT_VERSION_FILE)
-  set(PROJECT_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/version.json)
+    set(PROJECT_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/version.json)
 endif()
 file(READ ${PROJECT_VERSION_FILE} VERSION_JSON_STR)
 
@@ -24,11 +24,25 @@ list(APPEND EXTRACTED_MAJOR_VERSION ${MAJOR_VERSION})
 
 message(TRACE "EXTRACTED_MAJOR_VERSION: ${EXTRACTED_MAJOR_VERSION}")
 
-# [3] Get the number of commits in the master branch using git
+# Determine the default branch (main or master)
 execute_process(
-    COMMAND git rev-list --count master
+    COMMAND git remote show origin
+    COMMAND sed -n "/HEAD branch/s/.*: //p"
+    OUTPUT_VARIABLE default_branch
     RESULT_VARIABLE script_result
-    OUTPUT_VARIABLE commits_in_master
+    ERROR_VARIABLE script_error
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_STRIP_TRAILING_WHITESPACE
+)
+if(NOT script_result EQUAL "0")
+    message(FATAL_ERROR "Failed to get default branch: ${script_error}")
+endif()
+
+# Get the number of commits in the default branch
+execute_process(
+    COMMAND git rev-list --count ${default_branch}
+    OUTPUT_VARIABLE commits_in_default_branch
+    RESULT_VARIABLE script_result
     ERROR_VARIABLE script_error
     OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_STRIP_TRAILING_WHITESPACE
@@ -36,10 +50,10 @@ execute_process(
 
 if(NOT script_result EQUAL 0)
     message(ERROR "Failed to get commit count: ${script_error}")
-    set(commits_in_master "0")
+    set(commits_in_default_branch "0")
 endif()
 
-message(TRACE "Commits in master: ${commits_in_master}")
+message(TRACE "Commits in master: ${commits_in_default_branch}")
 
 # [4] Runnning locally
 set(patch 0)
