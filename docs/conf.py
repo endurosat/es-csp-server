@@ -86,10 +86,9 @@ if version_file_path:
     # Find all 'version' elements in the XML file
     xml_version = xml_version_file.getElementsByTagName('version')
 
-    version = "v.{major}.{minor}.{patch}".format(
+    version = "v.{major}.{minor}".format(
         major=xml_version[0].attributes['major'].value,
         minor=xml_version[0].attributes['minor'].value,
-        patch=xml_version[0].attributes['patch'].value,
     )
 
 branch_name = pygit2.Repository('.').head.shorthand
