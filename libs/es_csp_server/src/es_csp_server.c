@@ -200,9 +200,16 @@ void es_csp_server_destroy(es_csp_server_t **self_p)
 int es_csp_server_init(es_csp_server_t *self, int address, const char *phy_layer, const char *device)
 {
     int ret = CSP_ERR_NONE;
+    int i = 0;
     csp_conf_t csp_conf = {0};
     csp_iface_t *default_iface = NULL;
     server_csp_phy_layer_id_t phy_layer_id = ES_CSP_INVALID;
+
+    /* This allows to control the debug output using CSP_LOG_LEVEL_... */
+    for (i = 0; i < CSP_LOCK; i++)
+    {
+        csp_debug_set_level(i, true);
+    }
 
     phy_layer_id = server_csp_phy_layer_id_get(phy_layer);
     if (phy_layer_id == ES_CSP_INVALID)
