@@ -6,6 +6,12 @@ ES CSP Server
 .. contents::
     :depth: 3
 
+Data Types
+----------
+
+.. autocenumerator:: es_csp_server.h::es_csp_server_dbg_enb_t
+    :members:
+
 Interface Functions
 -------------------
 
