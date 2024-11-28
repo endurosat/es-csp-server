@@ -197,7 +197,8 @@ void es_csp_server_destroy(es_csp_server_t **self_p)
     }
 }
 
-int es_csp_server_init(es_csp_server_t *self, int address, const char *phy_layer, const char *device)
+int es_csp_server_init(es_csp_server_t *self, int address, const char *phy_layer,
+    const char *device, es_csp_server_dbg_enb_t csp_debug_enb)
 {
     int ret = CSP_ERR_NONE;
     int i = 0;
@@ -208,7 +209,7 @@ int es_csp_server_init(es_csp_server_t *self, int address, const char *phy_layer
     /* This allows to control the debug output using CSP_LOG_LEVEL_... */
     for (i = 0; i < CSP_LOCK; i++)
     {
-        csp_debug_set_level(i, true);
+        csp_debug_set_level(i, csp_debug_enb);
     }
 
     phy_layer_id = server_csp_phy_layer_id_get(phy_layer);
