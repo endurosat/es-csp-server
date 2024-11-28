@@ -12,6 +12,8 @@
 #define ES_CSP_SERVER_ADDRESS_DFLT 10
 #define ES_CSP_PHY_LAYER_DFLT "uart"
 #define ES_CSP_PHY_LAYER_DEVICE_DFLT "/dev/ttyUSB0"
+#define ES_CSP_DEBUG_ENB_DFLT CSP_DBG_DISABLED
+#define ES_VERBOSE_LEVEL_DFLT TRACE
 
 /******************************* LOCAL TYPEDEFS ******************************/
 typedef struct _server_args_t
@@ -19,10 +21,11 @@ typedef struct _server_args_t
     uint8_t address;
     const char *phy_layer;
     const char *phy_device;
+    es_csp_server_dbg_enb_t csp_debug_enb;
     int verbose;
 } server_args_t;
 #define ES_CSP_SERVER_DEFAULT_CFG { ES_CSP_SERVER_ADDRESS_DFLT, ES_CSP_PHY_LAYER_DFLT, \
-    ES_CSP_PHY_LAYER_DEVICE_DFLT, TRACE }
+    ES_CSP_PHY_LAYER_DEVICE_DFLT, ES_CSP_DEBUG_ENB_DFLT, ES_VERBOSE_LEVEL_DFLT }
 
 
 /********************************* LOCAL DATA *********************************/
@@ -31,6 +34,7 @@ static struct argp_option options[] = {
     {"address", 'a', "csp address", 0, "CSP Address", 0},
     {"phy_layer", 'p', "physical layer type", 0, "Physical layer type [ uart | can ]", 0},
     {"phy_device", 'd', "device", 0, "Physical device endpoint", 0},
+    {"csp_debug", 'c', 0, 0, "Enable CSP debug", 0},
     {"verbose", 'v', "verbose", 0, "Set verbosity level", 0},
     { 0 }
 };
@@ -60,6 +64,9 @@ error_t parse_option(int key, char *arg, struct argp_state *state)
             break;
         case 'd':
             arguments->phy_device = arg;
+            break;
+        case 'c':
+            arguments->csp_debug_enb = CSP_DBG_ENABLED;
             break;
         case 'v':
             arguments->verbose = atoi(arg);
@@ -99,7 +106,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    ret = es_csp_server_init(server, args.address, args.phy_layer, args.phy_device);
+    ret = es_csp_server_init(server, args.address, args.phy_layer,
+        args.phy_device, args.csp_debug_enb);
     if (0 == ret)
         /* The server runs until SIGTERM is sent */
         es_csp_server_run(server);
