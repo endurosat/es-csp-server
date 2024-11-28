@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>es_tftp_pkt.h &mdash; Endurosat Example POSIX Cubesat Space Protocol Server</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgba(52,49,49,1) 100%;" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ES CSP Server
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v.1.0.35 (master)
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_csp_server.html">ES CSP Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_file.html">ES File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_tftp.html">ES TFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_tftp_pkt.html">ES TFTP Packet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_log.html">ES Log</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgba(52,49,49,1) 100%;" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ES CSP Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">es_tftp_pkt.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for es_tftp_pkt.h</h1><div class="highlight"><pre>
+<span></span><span class="cm">/*****************************************************************************</span>
+<span class="cm"> * **file:** es_tftp_pkt.h</span>
+<span class="cm"> *</span>
+<span class="cm"> * **Description:** ES TFTP Packet</span>
+<span class="cm"> *****************************************************************************/</span>
+<span class="cp">#ifndef __ES_TFTP_PKT_H__</span>
+<div class="viewcode-block" id="c.__ES_TFTP_PKT_H__"><span class="cp">#define __ES_TFTP_PKT_H__</span></div>
+
+<span class="cm">/******************************** INCLUDE FILES *******************************/</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;es_file.h&quot;</span>
+
+<div class="viewcode-block" id="c._es_tftp_opcode_t"><div class="viewcode-block" id="c.es_tftp_opcode_t"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opcode_t">[docs]</a><span class="cm">/*********************************** DEFINES **********************************/</span>
+<span class="cm">/* es tftp opcode mnemonic */</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">_es_tftp_opcode_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_OPCODE_INVALID"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_OPCODE_INVALID"><span class="w">	 </span><span class="n">ES_TFTP_OPCODE_INVALID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_RRQ"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_RRQ"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opcode_t.ES_TFTP_RRQ">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_RRQ</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Read request. Request a transfer of a file from the</span>
+<span class="cm">		  server to the client */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_WRQ"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_WRQ"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opcode_t.ES_TFTP_WRQ">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_WRQ</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Write request. Request a transfer of a file from the</span>
+<span class="cm">		  client to the server */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_DATA"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_DATA"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opcode_t.ES_TFTP_DATA">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_DATA</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Data packet. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_ACK"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_ACK"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opcode_t.ES_TFTP_ACK">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ACK</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Acknowedge packet. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_ERROR"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_ERROR"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opcode_t.ES_TFTP_ERROR">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERROR</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Error packet. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_opcode_t.ES_TFTP_OPCODES"><div class="viewcode-block" id="c.es_tftp_opcode_t.ES_TFTP_OPCODES"><span class="w">	 </span><span class="n">ES_TFTP_OPCODES</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_opcode_t</span><span class="p">;</span></div></div>
+
+<div class="viewcode-block" id="c._es_tftp_err_code_t"><div class="viewcode-block" id="c.es_tftp_err_code_t"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t">[docs]</a><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">_es_tftp_err_code_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_NOT_DEFINED"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_NOT_DEFINED"><span class="w">	 </span><span class="n">ES_TFTP_ERR_NOT_DEFINED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_FILE_NOT_FOUND"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_FILE_NOT_FOUND"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t.ES_TFTP_ERR_FILE_NOT_FOUND">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERR_FILE_NOT_FOUND</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; The client receives this error code when the</span>
+<span class="cm">		  requested file does not exist. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_ACESS_VIOLATION"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_ACESS_VIOLATION"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t.ES_TFTP_ERR_ACESS_VIOLATION">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERR_ACESS_VIOLATION</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; This error is seen when we ask for a file</span>
+<span class="cm">		  on which we do not have the right to read or write. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_DISK_FULL_OR_ALLOCATION_EXCEEDED"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_DISK_FULL_OR_ALLOCATION_EXCEEDED"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t.ES_TFTP_ERR_DISK_FULL_OR_ALLOCATION_EXCEEDED">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERR_DISK_FULL_OR_ALLOCATION_EXCEEDED</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt;TFTP client receives this</span>
+<span class="cm">		  error when there is limited storage area on the server. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_ILLEGAL_TFTP_OPERATION"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_ILLEGAL_TFTP_OPERATION"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t.ES_TFTP_ERR_ILLEGAL_TFTP_OPERATION">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERR_ILLEGAL_TFTP_OPERATION</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Any TFTP packet does not follow the RFC is</span>
+<span class="cm">		  called illegal. A packet with an unknown opcode, a packet with a malformed</span>
+<span class="cm">		  payload, or a packet that is out of sequence with the normal</span>
+<span class="cm">		  flow of commands/responses would all be considered &quot;illegal&quot; */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_UNKNOWN_TRANSFER_ID"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_UNKNOWN_TRANSFER_ID"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t.ES_TFTP_ERR_UNKNOWN_TRANSFER_ID">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERR_UNKNOWN_TRANSFER_ID</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; When a TFTP client sends a duplicate read request</span>
+<span class="cm">		  (typically this happens when the first read request times out),</span>
+<span class="cm">		  the requests may create an unexpected situation on the server. */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_FILE_ALREADY_EXISTS"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_FILE_ALREADY_EXISTS"><span class="w">	 </span><span class="n">ES_TFTP_ERR_FILE_ALREADY_EXISTS</span><span class="p">,</span><span class="w"> </span><span class="cm">/** This error is received when there is a</span></div></div>
+<span class="cm">		  file with the same name on the server. I produced this file with</span>
+<span class="cm">		  transferring the same file to the server. */</span>
+<div class="viewcode-block" id="c._es_tftp_err_code_t.ES_TFTP_ERR_NO_SUCH_USER"><div class="viewcode-block" id="c.es_tftp_err_code_t.ES_TFTP_ERR_NO_SUCH_USER"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_code_t.ES_TFTP_ERR_NO_SUCH_USER">[docs]</a><span class="w">	 </span><span class="n">ES_TFTP_ERR_NO_SUCH_USER</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Unused</span>
+<span class="cm">		  Once the protocol was first adopted, it supported three modes of transferring,</span>
+<span class="cm">		  which were netascii, octet and mail mode, which was used for sending</span>
+<span class="cm">		  files to an email address. This error is received when the recipient</span>
+<span class="cm">		  username does not exist on the server. This mode is not used anymore.</span>
+
+<span class="cm">		  .. note:: We do not support the mode field.</span>
+<span class="cm">		  */</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_err_code_t</span><span class="p">;</span></div></div>
+
+<div class="viewcode-block" id="c.ES_TFTP_BLOCK_SIZE"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.ES_TFTP_BLOCK_SIZE">[docs]</a><span class="cp">#define ES_TFTP_BLOCK_SIZE        256</span></div>
+<div class="viewcode-block" id="c.ES_TFTP_FILENAME_MAX_SIZE"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.ES_TFTP_FILENAME_MAX_SIZE">[docs]</a><span class="cp">#define ES_TFTP_FILENAME_MAX_SIZE 512</span></div>
+<div class="viewcode-block" id="c.ES_TFTP_ERR_MSG_MAX_SIZE"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.ES_TFTP_ERR_MSG_MAX_SIZE">[docs]</a><span class="cp">#define ES_TFTP_ERR_MSG_MAX_SIZE  512</span></div>
+<span class="cm">/* This is the size of the largest packet that we can send/receive */</span>
+<div class="viewcode-block" id="c.ES_TFTP_PKT_MAX_SIZE"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.ES_TFTP_PKT_MAX_SIZE">[docs]</a><span class="cp">#define ES_TFTP_PKT_MAX_SIZE (ES_TFTP_PKT_HEADER_SIZE + ES_TFTP_DATA_HEADER_SIZE + ES_TFTP_BLOCK_SIZE )</span></div>
+<span class="cm">/* This is the size of the smallest packet that we can receive */</span>
+<div class="viewcode-block" id="c.ES_TFTP_PKT_MIN_SIZE"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.ES_TFTP_PKT_MIN_SIZE">[docs]</a><span class="cp">#define ES_TFTP_PKT_MIN_SIZE (ES_TFTP_PKT_HEADER_SIZE + ES_TFTP_ACK_HEADER_SIZE)</span></div>
+<div class="viewcode-block" id="c.ES_TFTP_BLOCK_N_MAX_VALUE"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.ES_TFTP_BLOCK_N_MAX_VALUE">[docs]</a><span class="cp">#define ES_TFTP_BLOCK_N_MAX_VALUE (65535) </span><span class="cm">/* 2^8 */</span></div>
+<div class="viewcode-block" id="c._es_tftp_request_t"><div class="viewcode-block" id="c.es_tftp_request_t"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_request_t">[docs]</a><span class="cm">/*********************************** TYPEDEFS *********************************/</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_es_tftp_request_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_tftp_request_t.mode"><div class="viewcode-block" id="c.es_tftp_request_t.mode"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_request_t.mode">[docs]</a><span class="w">	</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">mode</span><span class="p">;</span><span class="w"> </span><span class="cm">/**&lt; Mode (Unused) */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_request_t.filename"><div class="viewcode-block" id="c.es_tftp_request_t.filename"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_request_t.filename">[docs]</a><span class="w">	</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">filename</span><span class="p">[];</span><span class="w"> </span><span class="cm">/**&lt; File system path. Flexible array member with size x,</span>
+<span class="cm">							 x ∈ [1;512] */</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_request_t</span><span class="p">;</span></div></div>
+<div class="viewcode-block" id="c.ES_TFTP_REQUEST_HEADER_SIZE"><span class="cp">#define ES_TFTP_REQUEST_HEADER_SIZE (sizeof(es_tftp_request_t))</span></div>
+
+<div class="viewcode-block" id="c._es_tftp_data_t"><div class="viewcode-block" id="c.es_tftp_data_t"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_data_t">[docs]</a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_es_tftp_data_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_tftp_data_t.block_number"><div class="viewcode-block" id="c.es_tftp_data_t.block_number"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_data_t.block_number">[docs]</a><span class="w">	</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">block_number</span><span class="p">;</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_data_t.block"><div class="viewcode-block" id="c.es_tftp_data_t.block"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_data_t.block">[docs]</a><span class="w">	</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">block</span><span class="p">[];</span><span class="w"> </span><span class="cm">/**&lt; Data: Flexible array member with size x, x ∈ [1;512] */</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_data_t</span><span class="p">;</span></div></div>
+<div class="viewcode-block" id="c.ES_TFTP_DATA_HEADER_SIZE"><span class="cp">#define ES_TFTP_DATA_HEADER_SIZE (sizeof(es_tftp_data_t))</span></div>
+
+<div class="viewcode-block" id="c._es_tftp_ack_t"><div class="viewcode-block" id="c.es_tftp_ack_t"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_ack_t">[docs]</a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_es_tftp_ack_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_tftp_ack_t.block_number"><div class="viewcode-block" id="c.es_tftp_ack_t.block_number"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_ack_t.block_number">[docs]</a><span class="w">	</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">block_number</span><span class="p">;</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_ack_t</span><span class="p">;</span></div></div>
+<div class="viewcode-block" id="c.ES_TFTP_ACK_HEADER_SIZE"><span class="cp">#define ES_TFTP_ACK_HEADER_SIZE (sizeof(es_tftp_ack_t))</span></div>
+
+<div class="viewcode-block" id="c._es_tftp_err_t"><div class="viewcode-block" id="c.es_tftp_err_t"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_t">[docs]</a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_es_tftp_err_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_tftp_err_t.code"><div class="viewcode-block" id="c.es_tftp_err_t.code"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_t.code">[docs]</a><span class="w">	</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">code</span><span class="p">;</span><span class="w"> </span><span class="cm">/**&lt; Error code. @see es_tftp_err_code_t */</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_err_t.msg"><div class="viewcode-block" id="c.es_tftp_err_t.msg"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_err_t.msg">[docs]</a><span class="w">	</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">msg</span><span class="p">[];</span><span class="w"> </span><span class="cm">/**&lt; Error mesasge in free text format.</span>
+<span class="cm">						Flexible array member with size x, x ∈ [1;512] */</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_err_t</span><span class="p">;</span></div></div>
+<div class="viewcode-block" id="c.ES_TFTP_ERR_HEADER_SIZE"><span class="cp">#define ES_TFTP_ERR_HEADER_SIZE (sizeof(es_tftp_err_t))</span></div>
+
+<span class="cm">/* es tftp message structure */</span>
+<div class="viewcode-block" id="c._es_tftp_pkt_t.packed"><div class="viewcode-block" id="c._es_tftp_pkt_t"><div class="viewcode-block" id="c.es_tftp_pkt_t.packed"><div class="viewcode-block" id="c.es_tftp_pkt_t"><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">__attribute__</span><span class="p">((</span><span class="n">__packed__</span><span class="p">))</span><span class="w"> </span><span class="n">_es_tftp_pkt_t</span><span class="w"> </span><span class="p">{</span></div></div>
+<div class="viewcode-block" id="c._es_tftp_pkt_t.opcode"><div class="viewcode-block" id="c.es_tftp_pkt_t.opcode"><span class="w">	</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">opcode</span><span class="p">;</span><span class="w"> </span><span class="cm">/**&lt; Packet type @see es_tftp_opcode_t */</span></div></div>
+<span class="w">	</span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="n">es_tftp_request_t</span><span class="w"> </span><span class="n">request</span><span class="p">;</span>
+<span class="w">		</span><span class="n">es_tftp_data_t</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">		</span><span class="n">es_tftp_ack_t</span><span class="w"> </span><span class="n">ack</span><span class="p">;</span>
+<span class="w">		</span><span class="n">es_tftp_err_t</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="w">	 </span><span class="p">};</span>
+<span class="p">}</span><span class="w"> </span><span class="n">es_tftp_pkt_t</span><span class="p">;</span></div></div>
+<div class="viewcode-block" id="c.ES_TFTP_PKT_HEADER_SIZE"><span class="cp">#define ES_TFTP_PKT_HEADER_SIZE (sizeof(uint8_t))</span></div>
+
+<div class="viewcode-block" id="c.es_tftp_pkt_data_get_t"><span class="k">typedef</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">es_tftp_pkt_data_get_t</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">es_file_t</span><span class="w"> </span><span class="o">*</span><span class="n">file_handle</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span>
+<span class="w">	</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buffer_len</span><span class="p">);</span></div>
+<span class="cm">/************************** INTERFACE DATA DEFINITIONS ************************/</span>
+
+<span class="cm">/****************************** INTERFACE FUNCTIONS ***************************/</span>
+
+<div class="viewcode-block" id="c.es_tftp_ipkt_get"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_ipkt_get">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Get a new TFTP packet.</span>
+<span class="cm"> *</span>
+<span class="cm"> * .. note:: The packet is mapped on the memory provided by `buffer`</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[in] buffer: Input buffer containing TFTP packet.</span>
+<span class="cm"> * @param[in] buffer_len: Size of the input buffer.</span>
+<span class="cm"> * @return: Reference to ES TFTP packet (es_tftp_pkt_t)</span>
+<span class="cm"> */</span>
+<span class="n">es_tftp_pkt_t</span><span class="w"> </span><span class="o">*</span><span class="nf">es_tftp_ipkt_get</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">buffer_len</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_tftp_ipkt_data_size"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_ipkt_data_size">[docs]</a><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">es_tftp_ipkt_data_size</span><span class="p">(</span><span class="n">es_tftp_pkt_t</span><span class="w"> </span><span class="o">*</span><span class="n">pkt</span><span class="p">,</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="n">buffer_len</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_tftp_opkt_request"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opkt_request">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Create TFTP request packet</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[out] buffer: Storage memory for the packet</span>
+<span class="cm"> * @param[in] opcode: Opcode RRQ or WRQ</span>
+<span class="cm"> * @param[in] filename: Path to the file on the remote (RWQ) / local (RRQ) disk.</span>
+<span class="cm"> * @return: Size of the packet, -1 in case of an err.</span>
+<span class="cm"> */</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="nf">es_tftp_opkt_request</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">es_tftp_opcode_t</span><span class="w"> </span><span class="n">opcode</span><span class="p">,</span>
+<span class="w">	 </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">filename</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_tftp_opkt_err"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opkt_err">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Create TFTP Error packet</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[out] buffer: Storage memory for the packet.</span>
+<span class="cm"> * @param[in] err_code: Error code @see `es_tftp_err_code_t`</span>
+<span class="cm"> * @param[in] err_msg: Error message in free text format</span>
+<span class="cm"> * @return: Size of the packet, -1 in case of an err.</span>
+<span class="cm"> */</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="nf">es_tftp_opkt_err</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">es_tftp_err_code_t</span><span class="w"> </span><span class="n">err_code</span><span class="p">,</span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">err_msg</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_tftp_opkt_ack"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opkt_ack">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Create TFTP Acknowledge packet</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[out] buffer: Storage memory for the packet.</span>
+<span class="cm"> * @param[out] block_number: The block number of the data packet being acknowledged.</span>
+<span class="cm"> * @return: Size of the packet, -1 in case of an err.</span>
+<span class="cm"> */</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="nf">es_tftp_opkt_ack</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">block_number</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_tftp_opkt_data"><a class="viewcode-back" href="../modules/es_tftp_pkt.html#c.es_tftp_opkt_data">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Create TFTP Data packet</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[out] buffer: Storage memory for the packet.</span>
+<span class="cm"> * @param[in] block_number: Block number of the data packet.</span>
+<span class="cm"> * @param[in] data_get: Function pointer of type `es_tftp_pkt_data_get_t`.</span>
+<span class="cm"> * @param[in] file_handle: OS dependent file handle.</span>
+<span class="cm"> * @param[out] bytes_read: Amount of read bytes from the file associated with</span>
+<span class="cm"> *   `file_handle`.</span>
+<span class="cm"> * @return: Size of the packet, -1 in case of an err.</span>
+<span class="cm"> */</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="nf">es_tftp_opkt_data</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">block_number</span><span class="p">,</span>
+<span class="w">	</span><span class="n">es_tftp_pkt_data_get_t</span><span class="w"> </span><span class="n">data_get</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">file_handle</span><span class="p">,</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="o">*</span><span class="n">bytes_read</span><span class="p">);</span></div>
+
+
+<span class="cp">#endif </span><span class="cm">/* __ES_TFTP_PKT_H__ */</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Endurosat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

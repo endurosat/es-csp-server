@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>es_csp_server.h &mdash; Endurosat Example POSIX Cubesat Space Protocol Server</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgba(52,49,49,1) 100%;" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ES CSP Server
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v.1.0.35 (master)
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_csp_server.html">ES CSP Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_file.html">ES File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_tftp.html">ES TFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_tftp_pkt.html">ES TFTP Packet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/es_log.html">ES Log</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgba(52,49,49,1) 100%;" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ES CSP Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">es_csp_server.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for es_csp_server.h</h1><div class="highlight"><pre>
+<span></span><span class="cm">/*****************************************************************************</span>
+<span class="cm"> * **file:** server.h</span>
+<span class="cm"> *</span>
+<span class="cm"> * **Description:** ES CSP Server</span>
+<span class="cm"> *****************************************************************************/</span>
+<span class="cp">#ifndef __ES_CSP_SERVER_H__</span>
+<div class="viewcode-block" id="c.__ES_CSP_SERVER_H__"><span class="cp">#define __ES_CSP_SERVER_H__</span></div>
+
+<span class="cm">/******************************** INCLUDE FILES *******************************/</span>
+
+<span class="cm">/*********************************** DEFINES **********************************/</span>
+
+<span class="cm">/*********************************** TYPEDEFS *********************************/</span>
+
+<div class="viewcode-block" id="c._es_csp_server_dbg_enb_t"><div class="viewcode-block" id="c.es_csp_server_dbg_enb_t"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_dbg_enb_t">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Enable/ Disable CSP lib  debug prints</span>
+<span class="cm"> */</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">_es_csp_server_dbg_enb_t</span><span class="w"> </span><span class="p">{</span>
+<div class="viewcode-block" id="c._es_csp_server_dbg_enb_t.CSP_DBG_DISABLED"><div class="viewcode-block" id="c.es_csp_server_dbg_enb_t.CSP_DBG_DISABLED"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_dbg_enb_t.CSP_DBG_DISABLED">[docs]</a><span class="w">    </span><span class="n">CSP_DBG_DISABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Disable CSP lib debug prints */</span></div></div>
+<div class="viewcode-block" id="c._es_csp_server_dbg_enb_t.CSP_DBG_ENABLED"><div class="viewcode-block" id="c.es_csp_server_dbg_enb_t.CSP_DBG_ENABLED"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_dbg_enb_t.CSP_DBG_ENABLED">[docs]</a><span class="w">    </span><span class="n">CSP_DBG_ENABLED</span><span class="p">,</span><span class="w"> </span><span class="cm">/**&lt; Enable CSP lib debug prints */</span></div></div>
+<span class="p">}</span><span class="w"> </span><span class="n">es_csp_server_dbg_enb_t</span><span class="p">;</span></div></div>
+
+<div class="viewcode-block" id="c.es_csp_server_t"><span class="cm">/************************** INTERFACE DATA DEFINITIONS ************************/</span>
+<div class="viewcode-block" id="c._es_csp_server_t"><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_es_csp_server_t</span><span class="w"> </span><span class="n">es_csp_server_t</span><span class="p">;</span></div></div>
+
+<span class="cm">/******************************* INTERFACE FUNCTIONS **************************/</span>
+
+<div class="viewcode-block" id="c.es_csp_server_new"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_new">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Create new CSP server object</span>
+<span class="cm"> */</span>
+<span class="n">es_csp_server_t</span><span class="w"> </span><span class="o">*</span><span class="nf">es_csp_server_new</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_csp_server_destroy"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_destroy">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Destroy CSP server object</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[in] self_p: Pointer to ES CSP server object reference</span>
+<span class="cm"> */</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">es_csp_server_destroy</span><span class="p">(</span><span class="n">es_csp_server_t</span><span class="w"> </span><span class="o">**</span><span class="n">self_p</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_csp_server_init"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_init">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Initialize CSP server object</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param[in] self: Reference to ES CSP server object</span>
+<span class="cm"> * @param[in] address: CSP server address</span>
+<span class="cm"> * @param[in] phy_layer: Physical layer to use (`uart` or `can`)</span>
+<span class="cm"> * @param[in] device: Device path</span>
+<span class="cm"> * @param[in] csp_debug_enb: Enable CSP debug</span>
+<span class="cm"> * @return 0 if succesfull, -1 on error</span>
+<span class="cm"> */</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">es_csp_server_init</span><span class="p">(</span><span class="n">es_csp_server_t</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">phy_layer</span><span class="p">,</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">es_csp_server_dbg_enb_t</span><span class="w"> </span><span class="n">csp_debug_enb</span><span class="p">);</span></div>
+
+<div class="viewcode-block" id="c.es_csp_server_run"><a class="viewcode-back" href="../modules/es_csp_server.html#c.es_csp_server_run">[docs]</a><span class="cm">/**</span>
+<span class="cm"> * Execute server main loop</span>
+<span class="cm"> */</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">es_csp_server_run</span><span class="p">(</span><span class="n">es_csp_server_t</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">);</span></div>
+
+<span class="cp">#endif </span><span class="cm">/* __ES_CSP_SERVER_H__ */</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Endurosat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

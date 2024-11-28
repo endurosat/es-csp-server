@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ES CSP 1.6 Server &mdash; Endurosat Example POSIX Cubesat Space Protocol Server</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ES CSP Server" href="modules/es_csp_server.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgba(52,49,49,1) 100%;" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ES CSP Server
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v.1.0.35 (master)
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/es_csp_server.html">ES CSP Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/es_file.html">ES File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/es_tftp.html">ES TFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/es_tftp_pkt.html">ES TFTP Packet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/es_log.html">ES Log</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgba(52,49,49,1) 100%;" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ES CSP Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ES CSP 1.6 Server</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="es-csp-1-6-server">
+<h1>ES CSP 1.6 Server<a class="headerlink" href="#es-csp-1-6-server" title="Permalink to this heading"></a></h1>
+<section id="brief">
+<h2>Brief<a class="headerlink" href="#brief" title="Permalink to this heading"></a></h2>
+<p>This is an example CSP 1.6 server implementation used for transferring of files
+and/or receiving data between the supported physical layers and a Endurosat’s On-Board Computer.</p>
+</section>
+<section id="scope">
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this heading"></a></h2>
+<p>The application can be used on any Linux/Posix based machine that is able
+to run <a class="reference external" href="https://github.com/libcsp/libcsp">libcsp</a>.</p>
+<p>The provided server supports:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">KISS</span></code> (UART)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CAN</span></code>  (optional)</p></li>
+</ul>
+<p>This could be easily extended for other interfaces supported by <code class="docutils literal notranslate"><span class="pre">CSP</span></code> if necessary.</p>
+</section>
+<section id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading"></a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>es-csp-server
+          ├── app                      --&gt; example csp server application
+          ├── cmake                    --&gt; helper CMake modules
+          ├── CMakeLists.txt           --&gt; repo CMakeLists.txt file
+          ├── docs                     --&gt; API documentation
+          ├── external
+          │   └── libcsp               --&gt; actual CSP1.6 submodule
+          ├── libs
+          │   ├── es_csp_server        --&gt; CSP server library
+          │   ├── es_log               --&gt; sample logging library
+          │   ├── es_tftp              --&gt; es tftp library
+          │   └── libcsp
+          │       ├── CMakeLists.txt
+          │       └── patches          --&gt; CMakeLists.txt file for CSP1.6
+          └── README.md                --&gt; this readme
+</pre></div>
+</div>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<p>Build:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span></code>  =&gt; any</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMake</span></code> &gt;= 3.21</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> = any</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code>  =&gt; 11 (for -fanalyzer)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ninja</span></code> = any (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threads/pthreads</span></code> = any</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">libsocketcan</span></code> = any</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clang-tidy</span></code> = any (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cpp-check</span></code> = any (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">systemd</span></code>  =&gt; any (optional)</p></li>
+</ul>
+<p>API docs python packages:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">clang-17</span></code> (development)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sphinx-rtd-theme,</span> <span class="pre">sphinxcontrib-mermaid,</span> <span class="pre">furo,</span> <span class="pre">sphinx-copybutton,</span> <span class="pre">sphinx-design,</span> <span class="pre">sphinx-inline-tabs,</span> <span class="pre">sphinxcontrib.autoprogram,</span> <span class="pre">myst-parser,</span> <span class="pre">linuxdoc,</span> <span class="pre">sphinx_c_autodocm,</span> <span class="pre">sphinx_git,</span> <span class="pre">pygit2</span></code></p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">   ~$ git clone  https://github.com/endurosat/es-csp-server.git ${CSP_SERVER}</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">   ~$ cd ${CSP_SERVER}</span>
+<span class="go">   ~$ rm -rf build &amp;&amp; cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr  . -B build &amp;&amp; cmake --build ./build</span>
+<span class="go">   ~$ cd ${CSP_SERVER}/build &amp;&amp; ninja install</span>
+</pre></div>
+</div>
+<p><strong><em>NOTE:</em></strong>  change the desired install prefix and build type;  <br>
+<strong><em>NOTE:</em></strong>  for cross-compilation use CMake toolchain file or manually set your environment</p>
+</section>
+<section id="using-clang">
+<h2>Using Clang<a class="headerlink" href="#using-clang" title="Permalink to this heading"></a></h2>
+<p>Pass <code class="docutils literal notranslate"><span class="pre">-DCMAKE_C_COMPILER=clang</span></code> to cmake or use global overrides / toolchain file.</p>
+</section>
+<section id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>process in interactive shell:</p></li>
+</ul>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">   /build/app$ ./csp_server --help</span>
+<span class="go">   arg parse</span>
+<span class="go">   Usage: csp_server [OPTION...]</span>
+
+<span class="go">     -d, --phy_device=device    Physical device endpoint</span>
+<span class="go">     -p, --phy_layer=physical-layer-type</span>
+<span class="go">                                Physical layer type [ uart | can ]</span>
+<span class="go">     -v, --verbose=verbose      Set verbosity level</span>
+<span class="go">     -?, --help                 Give this help list</span>
+<span class="go">         --usage                Give a short usage message</span>
+
+<span class="go">   Mandatory or optional arguments to long options are also mandatory or optional</span>
+<span class="go">   for any corresponding short options.</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">   /build/app$ csp_server -d /dev/ttyUSB0 -p uart -v TRACE</span>
+<span class="go">    main [INFO] (98): CSP addr: 10 (0x0A), device:/dev/ttyUSB0 (uart)</span>
+<span class="go">    csp_server [DEBUG] (171): Creating new server</span>
+<span class="go">    csp_server [DEBUG] (246): UART iface init done</span>
+<span class="go">    es_tftp [DEBUG] (290): Creating new tftp context</span>
+<span class="go">    csp_server [DEBUG] (305): Starting server...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>sample systemd service for CAN:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+    <span class="n">Description</span><span class="o">=</span><span class="n">ES</span> <span class="n">Proxy</span> <span class="n">Service</span><span class="p">:</span> <span class="n">CSP</span> <span class="n">Server</span> <span class="p">(</span><span class="n">can</span><span class="p">)</span>
+    <span class="n">BindsTo</span><span class="o">=</span><span class="n">sys</span><span class="o">-</span><span class="n">subsystem</span><span class="o">-</span><span class="n">net</span><span class="o">-</span><span class="n">devices</span><span class="o">-</span><span class="n">can0</span><span class="o">.</span><span class="n">device</span>
+    <span class="n">After</span><span class="o">=</span><span class="n">sys</span><span class="o">-</span><span class="n">subsystem</span><span class="o">-</span><span class="n">net</span><span class="o">-</span><span class="n">devices</span><span class="o">-</span><span class="n">can0</span><span class="o">.</span><span class="n">device</span>
+
+    <span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+    <span class="n">Type</span><span class="o">=</span><span class="n">simple</span>
+    <span class="n">User</span><span class="o">=</span><span class="n">root</span>
+    <span class="n">Group</span><span class="o">=</span><span class="n">root</span>
+    <span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">csp_server</span> <span class="o">-</span><span class="n">d</span> <span class="n">can0</span> <span class="o">-</span><span class="n">p</span> <span class="n">can</span>
+    <span class="n">Restart</span><span class="o">=</span><span class="n">on</span><span class="o">-</span><span class="n">failure</span>
+    <span class="n">RestartSec</span><span class="o">=</span><span class="mi">2</span>
+    <span class="n">RemainAfterExit</span><span class="o">=</span><span class="n">yes</span>
+    <span class="n">TimeoutStopSec</span><span class="o">=</span><span class="mi">1</span>
+
+    <span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+    <span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>sample systemd service for UART</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+    <span class="n">Description</span><span class="o">=</span><span class="n">ES</span> <span class="n">Proxy</span> <span class="n">Service</span><span class="p">:</span> <span class="n">CSP</span> <span class="n">Server</span> <span class="p">(</span><span class="n">uart</span><span class="p">)</span>
+    <span class="n">ConditionPathExists</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyS0</span>
+
+    <span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+    <span class="n">Type</span><span class="o">=</span><span class="n">simple</span>
+    <span class="n">User</span><span class="o">=</span><span class="n">root</span>
+    <span class="n">Group</span><span class="o">=</span><span class="n">root</span>
+    <span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">csp_server</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyS0</span> <span class="o">-</span><span class="n">p</span> <span class="n">uart</span>
+    <span class="n">Restart</span><span class="o">=</span><span class="n">on</span><span class="o">-</span><span class="n">failure</span>
+    <span class="n">RestartSec</span><span class="o">=</span><span class="mi">2</span>
+    <span class="n">RemainAfterExit</span><span class="o">=</span><span class="n">yes</span>
+    <span class="n">TimeoutStopSec</span><span class="o">=</span><span class="mi">1</span>
+
+    <span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+    <span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="es-tftp">
+<h1>ES TFTP<a class="headerlink" href="#es-tftp" title="Permalink to this heading"></a></h1>
+<p>The current <code class="docutils literal notranslate"><span class="pre">csp-server</span></code> demo supports file transfer over the simplified
+<code class="docutils literal notranslate"><span class="pre">es-tftp</span></code> protocol.</p>
+<p>The file transfer protocol is used to transfer files between the SDR module and
+an external module. This section describes the protocol, how to use the API to
+upload/download files and the limitations of it.</p>
+<p>A file transfer is initiated with either write request (file upload) <code class="docutils literal notranslate"><span class="pre">WRQ</span></code> or
+read request (file download) <code class="docutils literal notranslate"><span class="pre">RRQ</span></code>. The contents of the file are exchanged using
+data packets with block size of <code class="docutils literal notranslate"><span class="pre">512</span></code> bytes. A data packet of less than block
+size of <code class="docutils literal notranslate"><span class="pre">512</span></code> bytes signals termination of a transfer. Notice that both sides
+involved in a transfer are considered senders and receivers. One sends data and
+receives acknowledgments, the other sends acknowledgments and receives data.</p>
+<p>An error cause termination of the connection. An error is signalled by sending
+an error packet. This packet is not acknowledged.</p>
+<p>Errors are caused by three types of events:</p>
+<ul class="simple">
+<li><p>not being able to satisfy the request (e.g., file not found, access violation)</p></li>
+<li><p>receiving a packet which cannot be decoded (e.g physical layer errors)</p></li>
+<li><p>losing access to a necessary resource (e.g., disk full or access denied during
+a transfer).</p></li>
+</ul>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this heading"></a></h2>
+<p>The documentation for the module can be generated using sphinx in from the
+<code class="docutils literal notranslate"><span class="pre">./docs</span></code> directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">   es-csp-server$ cd docs</span>
+<span class="go">   docs$ rm -rf build &amp;&amp; cmake . -B build &amp;&amp; cmake --build ./build</span>
+</pre></div>
+</div>
+<p>The resulting <code class="docutils literal notranslate"><span class="pre">rtd</span></code> based api documentation should be in <code class="docutils literal notranslate"><span class="pre">./build/html/index.html</span></code></p>
+</section>
+</section>
+<section id="libcsp">
+<h1>Libcsp<a class="headerlink" href="#libcsp" title="Permalink to this heading"></a></h1>
+<p>You can define different build time options that affect <code class="docutils literal notranslate"><span class="pre">libcsp</span></code> behavior in
+its corresponding CMakeLists.txt (libs/libcsp/patches/CMakeLists.txt) file.
+This is necessary since the 1.6 CSP does not have native CMake support. Refer to
+CSP’s documentation in <a class="reference external" href="https://github.com/libcsp/libcsp">libcsp</a>.</p>
+</section>
+<section id="faqs">
+<h1>FAQs<a class="headerlink" href="#faqs" title="Permalink to this heading"></a></h1>
+<p><strong>Q: What happens if we want to upload/download a file which already exists on the remote/local file system?</strong>  <br>
+<strong>A:</strong> The files are always truncated (deleted) in case they already exist on the file system.</p>
+<p><strong>Q: Can commands be send when there is a file transfer in progress?</strong>  <br>
+<strong>A:</strong> Currently the csp server on the SDR doesn’t support parallel execution of
+commands while there is a file transfer in progress. If such use case is
+required the file transfer on the SDR can be redesigned as an FSM which will
+make possible this behaviour.</p>
+<p><strong>Q: What are the buffer sizes in use?</strong>  <br>
+<strong>A:</strong> Currently:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ES_TFTP_BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">256</span> <span class="o">//</span><span class="nb">bytes</span>
+<span class="n">CSP_BUFFER_SIZE</span>    <span class="o">=</span> <span class="mi">256</span> <span class="o">//</span><span class="nb">bytes</span>
+</pre></div>
+</div>
+<p><strong>Q: What are the used CSP address and application port?</strong>  <br>
+<strong>A:</strong> Currently:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ES_CSP_SERVER_ADDRESS_DFLT</span> <span class="mi">10</span>
+<span class="n">ES_CSP_TFTP_PORT</span>           <span class="mi">11</span>
+</pre></div>
+</div>
+</section>
+<section id="software-license">
+<h1>Software license<a class="headerlink" href="#software-license" title="Permalink to this heading"></a></h1>
+<p>The source code is available under MIT license, see LICENSE for license text</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/es_csp_server.html" class="btn btn-neutral float-right" title="ES CSP Server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Endurosat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

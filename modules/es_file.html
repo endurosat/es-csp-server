@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ES File &mdash; Endurosat Example POSIX Cubesat Space Protocol Server</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ES TFTP" href="es_tftp.html" />
+    <link rel="prev" title="ES CSP Server" href="es_csp_server.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgba(52,49,49,1) 100%;" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ES CSP Server
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v.1.0.35 (master)
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="es_csp_server.html">ES CSP Server</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ES File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="es_tftp.html">ES TFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="es_tftp_pkt.html">ES TFTP Packet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="es_log.html">ES Log</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgba(52,49,49,1) 100%;" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ES CSP Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ES File</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="es-file">
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">ES File</a><a class="headerlink" href="#es-file" title="Permalink to this heading"></a></h1>
+<p><strong>file:</strong> es_file.h</p>
+<p><strong>Description:</strong> ES File</p>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#es-file" id="id1">ES File</a></p>
+<ul>
+<li><p><a class="reference internal" href="#interface-functions" id="id2">Interface Functions</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="interface-functions">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Interface Functions</a><a class="headerlink" href="#interface-functions" title="Permalink to this heading"></a></h2>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_new">
+<span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">es_file_new</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_new" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_new"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create new ES File object</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_destroy">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_destroy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self_p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_destroy" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_destroy"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Destroy ES File object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self_p:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_path_get">
+<span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">es_file_path_get</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_path_get" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_path_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Retrieve the path of a file stored on the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path of the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_exist">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_exist</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_exist" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Check if a file exists on the disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_remove">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_remove</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_remove" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Remove a file from the disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_size_get">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_size_get</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_size_get" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_size_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Retrieve the size of a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_open">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_open</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_open" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_open"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Open a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+<li><p><strong>mode:</strong> – Mode in which the file will be opened</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_set">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_set</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="p"><span class="pre">*</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">position</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_set" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Check if a file exists on the disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+<li><p><strong>position:</strong> – Position at which the file cursor will be set.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_read">
+<span class="n"><span class="pre">ssize_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_read</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">blksize</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_read" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Check if a file exists on the disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+<li><p><strong>data:</strong> – Buffer in which the data will be stored</p></li>
+<li><p><strong>blksize:</strong> – Size of the data block to read</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_write">
+<span class="n"><span class="pre">ssize_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_write</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">blksize</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_write" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_write"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Check if a file exists on the disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+<li><p><strong>data:</strong> – Data to write.</p></li>
+<li><p><strong>blksize:</strong> – Size of the data block to write.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_sync">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_sync</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_sync" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Sync contents of the file on the disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if succesfull, -1 on error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.es_file_close">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">es_file_close</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">es_file_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.es_file_close" title="Permalink to this definition"></a><br /><a class="reference internal" href="../_modules/es_file.h.html#c.es_file_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Close a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self:</strong> – Reference to ES File object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="es_csp_server.html" class="btn btn-neutral float-left" title="ES CSP Server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="es_tftp.html" class="btn btn-neutral float-right" title="ES TFTP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Endurosat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
